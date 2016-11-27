@@ -1,0 +1,17 @@
+#Let`s create our next image mysql for database
+FROM mysql:latest
+
+#There must somebody be responsible for the bugs :)
+MAINTAINER Rom_DevOps
+
+#We need set the Environment Variables
+ENV MYSQL_ROOT_PASSWORD=rom_admin \
+    MYSQL_DATABASE=my_data \
+    MYSQL_USER=rom_admin \
+    MYSQL_PASSWORD=admin
+
+#Ports
+EXPOSE 3306
+
+#The MYSQL will whrite it`s data files in directory below
+VOLUME /var/lib/mysql

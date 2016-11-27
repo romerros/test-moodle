@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testmoodle
+spec:
+  containers:
+    - name: moodleapp-mysql-kube
+      image: romero/moodleapp_mysql
+      ports:
+        - containerPort: 3306
+    - name: moodleapp-apache-php-kube
+      image: romero/moodleapp_apache-php
+      ports:
+        - containerPort: 8080

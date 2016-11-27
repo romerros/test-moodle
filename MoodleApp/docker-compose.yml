@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=rom_admin
+      - MYSQL_DATABASE=my_data
+      - MYSQL_USER=rom_admin
+      - MYSQL_PASSWORD=admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - "/var/lib/mysql"
+    restart: always
+
+  apache-php:
+    build:
+      context: .
+      dockerfile: Dockerfile-moodle
+    links:
+      - mysql
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - "/var/www/moodle"
+      - "/var/www/moodledata"
+    restart: always

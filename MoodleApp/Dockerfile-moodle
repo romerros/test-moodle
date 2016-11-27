@@ -1,0 +1,27 @@
+#Let's create the apache-php server image, where will live our php web app
+FROM eboraas/apache-php
+
+RUN apt-get update && apt-get install -y php5-curl php5-gd php5-xmlrpc php5-intl
+
+#There must somebody be responsible for the bugs :)
+MAINTAINER Rom_DevOps
+
+#Let's create directory & Add the moodle app to image
+RUN mkdir /var/www/moodle &&\
+    chmod -R 755 /var/www/moodle
+COPY ./moodle/ /var/www/moodle/
+
+#Creating moodle data location (for installation)
+RUN mkdir /var/www/moodledata &&\
+    chmod -R 777 /var/www/moodledata
+    
+#We need to copy modified config files to apache2 server's config directory
+COPY ./rom.moodle.conf /etc/apache2/sites-available/
+COPY ./apache2.conf /etc/apache2/
+
+#We need to set volume directory for our site content
+VOLUME /var/www/moodle
+VOLUME /var/www/moodledata
+
+RUN a2dissite 000-default.conf &&\
+    a2ensite rom.moodle.conf
