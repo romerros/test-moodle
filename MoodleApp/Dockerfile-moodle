@@ -8,7 +8,7 @@ MAINTAINER Rom_DevOps
 
 #Let's create directory & Add the moodle app to image
 RUN mkdir /var/www/moodle &&\
-    chmod -R 755 /var/www/moodle
+    chmod -R 777 /var/www/moodle
 COPY ./moodle/ /var/www/moodle/
 
 #Creating moodle data location (for installation)
