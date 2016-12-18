@@ -9,22 +9,26 @@ spec:
     - resources:
         limits:
           cpu: 0.5
-      image: romero/moodleapp_mysql
       name: mysql
+      image: romero/moodle-mysql
       env:
         - name: MYSQL_ROOT_PASSWORD
-          # Change this password!
           value: rom-admin
+        - name: MYSQL_DATABASE
+          value: my-data
+        - name: MYSQL_USER
+          value: rom-admin
+        - name: MYSQL_PASSWORD
+          value: admin
       ports:
         - containerPort: 3306
           name: mysql
       volumeMounts:
-          # This name must match the volumes.name below.
         - name: my-data
-          mountPath: /var/lib/mysql
+          mountPath: /var/lib/mysqldata
+  nodeName: gke-moodle-cluster-default-pool-7ea7bac9-uujw
   volumes:
     - name: my-data
       gcePersistentDisk:
-        # This disk must already exist.
         pdName: mysql-disk
-        fsType: ext4
+        fsType: ext4 
