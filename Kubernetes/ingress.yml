@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-connection
+spec:
+  rules:
+  - host: rom.moodle.com
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: moodle
+          servicePort: 80
