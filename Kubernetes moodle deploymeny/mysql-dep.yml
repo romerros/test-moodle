@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: moodle-mysql
+  labels:
+    app: moodleapp
+spec:
+  template:
+    metadata:
+      labels:
+        app: moodleapp
+        tier: mysql
+    spec: 
+      containers:
+      - name: mysql
+        image: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: moodlepass
+        - name: MYSQL_DATABASE
+          value: my-data
+        - name: MYSQL_USER
+          value: rom-admin
+        - name: MYSQL_PASSWORD
+          value: admin
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: my-data
+          mountPath: /var/lib/mysql
+      nodeName: gke-moodle-cluster-default-pool-f4378c94-cbdf
+      volumes:
+        - name: my-data
+          emptyDir: {}

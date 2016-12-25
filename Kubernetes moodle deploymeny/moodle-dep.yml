@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: moodle
+  labels:
+    app: moodleapp
+spec:
+  template:
+    metadata:
+      labels:
+        app: moodleapp
+        tier: frontend
+    spec:
+      containers:
+      - name: moodle
+        image: romero/moodleapp-apache-php
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: moodle-mysql
+        - name: MOODLE_DB_PASSWORD
+          # Change this - must match mysql.yaml password.
+          value: moodlepass
+        ports:
+        - containerPort: 80
+          name: moodle
+        volumeMounts:
+          # Name must match the volume name below.
+        - name: moodle-data
+          # Mount path within the container.
+          mountPath: /var/www/html
+      nodeName: gke-moodle-cluster-default-pool-f4378c94-cbdf
+      volumes:
+        - name: moodle-data
+          emptyDir: {}
