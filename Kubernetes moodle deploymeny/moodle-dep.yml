@@ -15,7 +15,7 @@ spec:
       - name: moodle
         image: romero/moodleapp-apache-php
         env:
-        - name: WORDPRESS_DB_HOST
+        - name: MOODLE_DB_HOST
           value: moodle-mysql
         - name: MOODLE_DB_PASSWORD
           # Change this - must match mysql.yaml password.
